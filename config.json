@@ -1,6 +1,7 @@
 {
-    "clientId": "botのid",
-    "guildId": "serverのid",
-    "channelId": "ログチャンネルのid",
-    "suggestionChannelId": "提案のid"
+    "clientId": "BotのID",
+    "guildId": "サーバーのID",
+    "channelId": "ログチャンネルのID",
+    "suggestionChannelId": "提案チャンネルのID",
+    "roleId": "ロールのID"
 }
