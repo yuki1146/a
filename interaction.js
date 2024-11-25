@@ -16,7 +16,7 @@ module.exports = {
             try {
                 await command.execute(interaction);
             } catch (error) {
-                console.error(error);
+                console.error('コマンド実行中にエラーが発生しました:', error);
                 await interaction.reply({ content: 'エラーが発生しました。', ephemeral: true });
             }
         } 
@@ -33,10 +33,14 @@ module.exports = {
                 .setRequired(true);
 
             const actionRow = new ActionRowBuilder().addComponents(suggestionInput);
-
             modal.addComponents(actionRow);
 
-            await interaction.showModal(modal);
+            try {
+                await interaction.showModal(modal);
+            } catch (error) {
+                console.error('モーダルの表示中にエラーが発生しました:', error);
+                await interaction.reply({ content: 'モーダルを表示中にエラーが発生しました。', ephemeral: true });
+            }
         }
         // モーダルの入力が送信されたとき
         else if (interaction.isModalSubmit() && interaction.customId === 'suggestionModal') {
@@ -53,13 +57,18 @@ module.exports = {
                 )
                 .setTimestamp();
 
-            // 指定チャンネルに提案を送信
-            const channel = await client.channels.fetch(suggestionChannelId);
-            if (channel) {
-                await channel.send({ embeds: [suggestionEmbed] });
-                await interaction.reply({ content: '提案が送信されました。', ephemeral: true });
-            } else {
-                await interaction.reply({ content: '提案を送信するチャンネルが見つかりませんでした。', ephemeral: true });
+            try {
+                // 指定チャンネルに提案を送信
+                const channel = await client.channels.fetch(suggestionChannelId);
+                if (channel) {
+                    await channel.send({ embeds: [suggestionEmbed] });
+                    await interaction.reply({ content: '提案が送信されました。', ephemeral: true });
+                } else {
+                    await interaction.reply({ content: '提案を送信するチャンネルが見つかりませんでした。', ephemeral: true });
+                }
+            } catch (error) {
+                console.error('提案を送信中にエラーが発生しました:', error);
+                await interaction.reply({ content: '提案を送信する際にエラーが発生しました。', ephemeral: true });
             }
         }
         // 認証ボタンがクリックされたとき
@@ -99,5 +108,5 @@ module.exports = {
                 });
             }
         }
-    },
+    }
 };
