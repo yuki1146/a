@@ -34,11 +34,15 @@ const kickLog = require('./events/moderation/kickLog');
 const timeoutLog = require('./events/moderation/timeoutLog');
 const messageDeleteLog = require('./events/moderation/messageDeleteLog');
 const messageEditLog = require('./events/moderation/messageEditLog');
+const roleRemoval = require('./events/roleRemoval'); // 追加: roleRemovalイベントの読み込み
 
 // moderation関連イベントの設定
 client.on('guildBanAdd', (ban) => banLog.execute(ban));
 client.on('guildMemberRemove', (member) => kickLog.execute(member));
-client.on('guildMemberUpdate', (oldMember, newMember) => timeoutLog.execute(oldMember, newMember));
+client.on('guildMemberUpdate', (oldMember, newMember) => {
+    timeoutLog.execute(oldMember, newMember);
+    roleRemoval.execute(oldMember, newMember, client); // 追加: roleRemovalイベントの実行
+});
 client.on('messageDelete', (message) => messageDeleteLog.execute(message));
 client.on('messageUpdate', (oldMessage, newMessage) => messageEditLog.execute(oldMessage, newMessage));
 
