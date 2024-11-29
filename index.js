@@ -10,6 +10,7 @@ const {
 } = require('discord.js');
 const { clientId, guildId, channelId } = require('./config.json');
 const fs = require('fs');
+const { constrainedMemory } = require('process');
 require('dotenv').config();
 
 // クライアントの作成
@@ -28,23 +29,28 @@ const client = new Client({
 // コマンドのコレクションを初期化
 client.commands = new Collection();
 
-// moderationイベント読み込み
-const banLog = require('./events/moderation/banLog');
-const kickLog = require('./events/moderation/kickLog');
-const timeoutLog = require('./events/moderation/timeoutLog');
-const messageDeleteLog = require('./events/moderation/messageDeleteLog');
-const messageEditLog = require('./events/moderation/messageEditLog');
-const roleRemoval = require('./events/roleRemoval'); // 追加: roleRemovalイベントの読み込み
+// イベントの読み込み
+const loadEvents = (dir = './events') => {
+    const eventFiles = fs.readdirSync(dir, { withFileTypes: true });
 
-// moderation関連イベントの設定
-client.on('guildBanAdd', (ban) => banLog.execute(ban));
-client.on('guildMemberRemove', (member) => kickLog.execute(member));
-client.on('guildMemberUpdate', (oldMember, newMember) => {
-    timeoutLog.execute(oldMember, newMember);
-    roleRemoval.execute(oldMember, newMember, client); // 追加: roleRemovalイベントの実行
-});
-client.on('messageDelete', (message) => messageDeleteLog.execute(message));
-client.on('messageUpdate', (oldMessage, newMessage) => messageEditLog.execute(oldMessage, newMessage));
+    for (const file of eventFiles) {
+        if (file.isDirectory()) {
+            // サブディレクトリ内のイベントも再帰的に読み込む
+            loadEvents(`${dir}/${file.name}`);
+        } else if (file.name.endsWith('.js')) {
+            const event = require(`${dir}/${file.name}`);
+            if (event.name) {
+                client.on(event.name, (...args) => event.execute(...args, client));
+                console.log(`Loaded event: ${event.name} from ${dir}/${file.name}`);
+            } else {
+                console.error(`Invalid event format in ${dir}/${file.name}:`, event);
+            }
+        }
+    }
+};
+
+// イベントの登録
+loadEvents();
 
 // コマンドの読み込みと重複チェック
 const commands = fs
@@ -97,24 +103,5 @@ const rest = new REST({ version: '10' }).setToken(process.env.token);
         console.error('コマンド登録中のエラー:', error);
     }
 })();
-
-// イベントの読み込み
-const loadEvents = () => {
-    const eventFiles = fs
-        .readdirSync('./events')
-        .filter((file) => file.endsWith('.js'));
-
-    for (const file of eventFiles) {
-        const event = require(`./events/${file}`);
-        if (event.name) {
-            client.on(event.name, (...args) => event.execute(...args, client));
-        } else {
-            console.error(`Invalid event format in ${file}:`, event);
-        }
-    }
-};
-
-// スラッシュコマンドを登録
-loadEvents();
 
 client.login(process.env.token);
