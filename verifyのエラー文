@@ -1,74 +1,33 @@
-verifyコマンドの実行中にエラーが発生しました: DiscordAPIError[40060]: Interaction has already been acknowledged.
-    at handleErrors (C:\Users\○○○○\Desktop\mycode\DiscordBot\node_modules\@discordjs\rest\dist\index.js:727:13)
+verifyコマンドの実行中にエラーが発生しました: DiscordAPIError[10062]: Unknown interaction     
+    at handleErrors (C:\Users\○○○○○○\Desktop\mycode\DiscordBot\node_modules\@discordjs\rest\dist\index.js:727:13)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async BurstHandler.runRequest (C:\Users\○○○○\Desktop\mycode\DiscordBot\node_modules\@discordjs\rest\dist\index.js:831:23)
-    at async _REST.request (C:\Users\○○○○\Desktop\mycode\DiscordBot\node_modules\@discordjs\rest\dist\index.js:1272:22)
-    at async ChatInputCommandInteraction.deferReply (C:\Users\○○○○\Desktop\mycode\DiscordBot\node_modules\discord.js\src\structures\interfaces\InteractionResponses.js:72:5)
-    at async Object.execute (C:\Users\○○○○\Desktop\mycode\DiscordBot\commands\verify.js:23:13)
-    at async Object.execute (C:\Users\○○○○\Desktop\mycode\DiscordBot\events\interaction.js:17:17) {
+    at async BurstHandler.runRequest (C:\Users\○○○○○○\Desktop\mycode\DiscordBot\node_modules\@discordjs\rest\dist\index.js:831:23)
+    at async _REST.request (C:\Users\○○○○○○\Desktop\mycode\DiscordBot\node_modules\@discordjs\rest\dist\index.js:1272:22)
+    at async ChatInputCommandInteraction.deferReply (C:\Users\○○○○○○\Desktop\mycode\DiscordBot\node_modules\discord.js\src\structures\interfaces\InteractionResponses.js:72:5)
+    at async Object.execute (C:\Users\○○○○○○\Desktop\mycode\DiscordBot\commands\verify.js:23:13)    at async Object.execute (C:\Users\○○○○○○\Desktop\mycode\DiscordBot\events\interaction.js:17:17) {
   requestBody: { files: undefined, json: { type: 5, data: [Object] } },
-  rawError: {
-    message: 'Interaction has already been acknowledged.',
-    code: 40060
-  },
-  code: 40060,
-  status: 400,
+  rawError: { message: 'Unknown interaction', code: 10062 },
+  code: 10062,
+  status: 404,
   method: 'POST',
-  url: 'https://discord.com/api/v10/interactions/1312595472762011709/aW50ZXJhY3Rpb246MTMxMjU5NTQ3Mjc2MjAxMTcwOTpiaHdXS1NwZlE1cnI5a1d6SzBIV0xiaEdvajBDa28zb3d1VTVKRUlJeTY4MWhhbWVkeW9BVDl2YldkSVNiaTliN0RjeWJIdXU3VU5wYXpRTmJzSll2T0xicDNNUHVpNEtHeFkySmtnWWVualFiaktMcTNrcXNMdTF5YjZiNUIwZw/callback'
+  url: 'https://discord.com/api/v10/interactions/1314802687031640134/aW50ZXJhY3Rpb246MTMxNDgwMjY4NzAzMTY0MDEzNDpDY1RlclJodGZsQ0RJTUU2WE5LTXlDdGhiYzd3QW9JVWU4RkV4aW9vaW9xMlVJMjJjWkRUUGgwNW9HcXp6Wm4wRVJ5VzlUaU9mcHMzb3dZMVFJVzAzREpuOGt4clBBZW5jWEZLZ1ZRaWhMUUhGOFJBTlBrWk9nY0hRMk1TdEdzVQ/callback'
 }
 コマンド実行中にエラーが発生しました: Error [InteractionNotReplied]: The reply to this interaction has not been sent or deferred.
-    at ChatInputCommandInteraction.followUp (C:\Users\○○○○\Desktop\mycode\DiscordBot\node_modules\discord.js\src\structures\interfaces\InteractionResponses.js:188:64)
-    at Object.execute (C:\Users\○○○○\Desktop\mycode\DiscordBot\commands\verify.js:47:31)
+    at ChatInputCommandInteraction.followUp (C:\Users\○○○○○○\Desktop\mycode\DiscordBot\node_modules\discord.js\src\structures\interfaces\InteractionResponses.js:188:64)
+    at Object.execute (C:\Users\○○○○○○\Desktop\mycode\DiscordBot\commands\verify.js:47:31)      
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async Object.execute (C:\Users\○○○○\Desktop\mycode\DiscordBot\events\interaction.js:17:17) {
+    at async Object.execute (C:\Users\○○○○○○\Desktop\mycode\DiscordBot\events\interaction.js:17:17) {
   code: 'InteractionNotReplied'
 }
 node:events:497
-      throw er; // Unhandled 'error' event
+      throw er; // Unhandled 'error' event     
       ^
 
-DiscordAPIError[40060]: Interaction has already been acknowledged.
-    at handleErrors (C:\Users\○○○○\Desktop\mycode\DiscordBot\node_modules\@discordjs\rest\dist\index.js:727:13)
+TypeError: interaction.followUp(...) is not a function
+    at Object.execute (C:\Users\○○○○○○\Desktop\mycode\DiscordBot\events\interaction.js:20:45)   
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
-    at async BurstHandler.runRequest (C:\Users\○○○○\Desktop\mycode\DiscordBot\node_modules\@discordjs\rest\dist\index.js:831:23)
-    at async _REST.request (C:\Users\○○○○\Desktop\mycode\DiscordBot\node_modules\@discordjs\rest\dist\index.js:1272:22)
-    at async ChatInputCommandInteraction.reply (C:\Users\○○○○\Desktop\mycode\DiscordBot\node_modules\discord.js\src\structures\interfaces\InteractionResponses.js:115:5)
-    at async Object.execute (C:\Users\○○○○\Desktop\mycode\DiscordBot\events\interaction.js:20:17)
 Emitted 'error' event on Client instance at:
     at emitUnhandledRejectionOrErr (node:events:402:10)
-    at process.processTicksAndRejections (node:internal/process/task_queues:84:21) {
-  requestBody: {
-    files: [],
-    json: {
-      type: 4,
-      data: {
-        content: 'エラーが発生しました。',
-        tts: false,
-        nonce: undefined,
-        enforce_nonce: false,
-        embeds: undefined,
-        components: undefined,
-        username: undefined,
-        avatar_url: undefined,
-        allowed_mentions: undefined,
-        flags: 64,
-        message_reference: undefined,
-        attachments: undefined,
-        sticker_ids: undefined,
-        thread_name: undefined,
-        applied_tags: undefined,
-        poll: undefined
-      }
-    }
-  },
-  rawError: {
-    message: 'Interaction has already been acknowledged.',
-    code: 40060
-  },
-  code: 40060,
-  status: 400,
-  method: 'POST',
-  url: 'https://discord.com/api/v10/interactions/1312595472762011709/aW50ZXJhY3Rpb246MTMxMjU5NTQ3Mjc2MjAxMTcwOTpiaHdXS1NwZlE1cnI5a1d6SzBIV0xiaEdvajBDa28zb3d1VTVKRUlJeTY4MWhhbWVkeW9BVDl2YldkSVNiaTliN0RjeWJIdXU3VU5wYXpRTmJzSll2T0xicDNNUHVpNEtHeFkySmtnWWVualFiaktMcTNrcXNMdTF5YjZiNUIwZw/callback'
-}
+    at process.processTicksAndRejections (node:internal/process/task_queues:84:21)
 
 Node.js v20.17.0
